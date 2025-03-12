@@ -240,6 +240,15 @@
     </div>
 
 
-    <script src="/dist/javascript/loader.js"></script>
+     <script>var loader = document.getElementById("loader");
+var content = document.getElementById("content");
+
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    loader.classList.add("hidden");
+
+    content.style.display = "block";
+  },1); 
+});</script>
 </body>
 </html>
