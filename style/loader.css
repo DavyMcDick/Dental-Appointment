@@ -1,0 +1,47 @@
+.loader {
+    --dasharray: 814;
+    position: fixed;  /* Ensures the loader covers the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full width of viewport */
+    height: 100vh; /* Full height of viewport */
+    background: #fff; /* Optional: semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Ensure it's above all content */
+    opacity: 1;
+    transition: opacity 1s ease-out; /* Smooth fade-out transition */
+  }
+
+  .loader svg {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    max-width: 550px;
+  }
+
+  .loader svg path {
+    stroke-dasharray: var(--dasharray);
+    animation: heartRate 5s infinite linear forwards;
+  }
+
+  @keyframes heartRate {
+    from {
+      stroke-dashoffset: var(--dasharray);
+    }
+    to {
+      stroke-dashoffset: calc(var(--dasharray) * -1px);
+    }
+  }
+
+  /* Hide loader after page load */
+  .loader.hidden {
+    opacity: 0;
+    pointer-events: none; /* Disable interactions with loader */
+  }
+
+  /* Content Styling (hidden until loader is removed) */
+  #content {
+    display: none;
+  }
