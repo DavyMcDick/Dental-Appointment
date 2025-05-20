@@ -4,33 +4,28 @@ include('connect.php');
 $adminName = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : 'Admin';
 $today = date("Y-m-d");
 
-// 🟦 Total users
 $totalUsers = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user"))['total'];
 
-// 🟩 Total appointments (from confirm + walk_in)
 $totalConfirm = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM confirm"))['total'];
 $totalWalkIn = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM walk_in"))['total'];
 $totalAppointments = $totalConfirm + $totalWalkIn;
 
-// 🟨 Today's Appointments (Dates field in confirm is text, so use LIKE)
 $todaysConfirm = mysqli_fetch_assoc(mysqli_query($conn, 
     "SELECT COUNT(*) AS total FROM confirm WHERE Dates LIKE '$today%'"))['total'];
 
-// Walk-in table has `Dates` column as DATE, so direct comparison
+
 $todaysWalkIn = mysqli_fetch_assoc(mysqli_query($conn, 
     "SELECT COUNT(*) AS total FROM walk_in WHERE Dates = '$today'"))['total'];
 
 $todaysAppointments = $todaysConfirm + $todaysWalkIn;
 
-// 🟧 Confirmed (from confirm table)
+
 $confirmed = mysqli_fetch_assoc(mysqli_query($conn, 
     "SELECT COUNT(*) AS total FROM confirm WHERE Status = 'Confirmed'"))['total'];
 
-// 🟥 Walk-in Patients
 $walkInPatients = mysqli_fetch_assoc(mysqli_query($conn, 
     "SELECT COUNT(*) AS total FROM walk_in"))['total'];
 
-// 🟫 Canceled (from confirm and walk_in)
 $canceledConfirm = mysqli_fetch_assoc(mysqli_query($conn, 
     "SELECT COUNT(*) AS total FROM confirm WHERE Status = 'Cancelled'"))['total'];
 
@@ -322,15 +317,8 @@ $canceledAppointments = $canceledConfirm + $canceledWalkIn;
                       </div>
                     </div>
             
-                    <!-- RIGHT COLUMN: Full Height Chart -->
                     <div class="col-lg-6 d-flex align-items-stretch">
                       <div class="card w-100 h-100">
-                        <!-- <div class="card-body d-flex flex-column">
-                          <h4 class="card-title">Total Appointments</h4> -->
-                          <!-- Chart fills all remaining space -->
-                          <!-- <div class="flex-grow-1 d-flex align-items-center">
-                            <canvas id="areaChart" style="width: 100%; height: 100%;"></canvas>
-                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -347,26 +335,17 @@ $canceledAppointments = $canceledConfirm + $canceledWalkIn;
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
     <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
     <script src="assets/js/chart.js"></script>
     <script src="assets/js/template.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
     <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="assets/js/dashboard.js"></script>
-    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
-    <!-- End custom js for this page-->
+
   </body>
 </html>
