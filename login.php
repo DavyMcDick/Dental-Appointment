@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Use prepared statement to prevent SQL injection
     $stmt = $conn->prepare("SELECT Password FROM user WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -18,17 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Password is empty";
     } else {
     
-    // Check if the user exists
     if ($stmt->num_rows == 0) {
         $stmt->bind_result($hashedPassword);
         $stmt->fetch();
-        
-        // Verify the password
+
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['email'] = $email;
   
             header("Location: index.php");
-            exit(); // Stop script execution after redirection
+            exit(); 
         } else {
             $error = "Incorrect email or password please try again";
         }
