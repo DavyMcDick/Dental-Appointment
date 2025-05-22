@@ -45,14 +45,6 @@ if (isset($_POST['submit'])) {
     $insertStmt = $conn->prepare("INSERT INTO admin (Firstname, Lastname, Email, Password) VALUES (?, ?, ?, ?)");
     $insertStmt->bind_param("ssss", $firstname, $lastname, $email, $hashedPassword);
 
-    if ($insertStmt->execute()) {
-        echo "<script>alert('Registration successful! Redirecting to login...'); window.location.href='adminlogin.php';</script>";
-        exit();
-    } else {
-        echo "<script>alert('Error storing data: " . $insertStmt->error . "');</script>";
-    }
-
-    $insertStmt->close();
-    $conn->close();
+ 
 }
 ?>
